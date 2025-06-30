@@ -3,10 +3,11 @@ import React, { Fragment } from 'react';
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import MatchFeature from '@/components/Modals/MatchFeature/MatchFeature';
 
-export const MatchFeatureLightBox = ({ isOpen, onClose }) => {
+export const MatchFeatureLightBox = ({ data, onClose }) => {
+    const { open } = data;
     
     return (
-        <Transition appear show={isOpen} as={Fragment}>
+        <Transition appear show={open} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={onClose}>
                 <TransitionChild
                     as={Fragment}
@@ -32,7 +33,7 @@ export const MatchFeatureLightBox = ({ isOpen, onClose }) => {
                             leaveTo="opacity-0 scale-95"
                         >
                             <DialogPanel className="transform sm:px-[20px] px-[20px] overflow-hidden text-left align-middle shadow-xl transition-all relative flex justify-center items-center">
-                                <MatchFeature  onClose={onClose}/>
+                                <MatchFeature data={data} onClose={onClose}/>
                             </DialogPanel>
                         </TransitionChild>
                     </div>
