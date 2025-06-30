@@ -90,21 +90,25 @@ export const MatchFeatureSlider = ({ data, loop = false, origin = "auto", onClic
                 </div>
             )}
 
-            <button
-                onClick={() => sliderInstance.current?.prev()}
-                disabled={!loop && currentSlide?.rel === 0}
-                className="absolute bottom-0 right-12 w-[40px] h-[40px] rounded-full bg-white shadow-md lg:flex items-center justify-center z-10 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-                <MdOutlineChevronLeft className="w-[20px] h-[20px]" />
-            </button>
+            {data.length > 0 && (
+                <>
+                    <button
+                        onClick={() => sliderInstance.current?.prev()}
+                        disabled={!loop && currentSlide?.rel === 0}
+                        className="absolute bottom-0 right-12 w-[40px] h-[40px] rounded-full bg-white shadow-md lg:flex items-center justify-center z-10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                        <MdOutlineChevronLeft className="w-[20px] h-[20px]" />
+                    </button>
 
-            <button
-                onClick={() => sliderInstance.current?.next()}
-                disabled={!loop && currentSlide?.rel === currentSlide?.maxIdx}
-                className="absolute bottom-0 right-0 w-[40px] h-[40px] rounded-full bg-white shadow-md lg:flex items-center justify-center z-10 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-                <MdOutlineChevronRight className="w-[20px] h-[20px]" />
-            </button>
+                    <button
+                        onClick={() => sliderInstance.current?.next()}
+                        disabled={!loop && currentSlide?.rel === currentSlide?.maxIdx}
+                        className="absolute bottom-0 right-0 w-[40px] h-[40px] rounded-full bg-white shadow-md lg:flex items-center justify-center z-10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                        <MdOutlineChevronRight className="w-[20px] h-[20px]" />
+                    </button>
+                </>
+            )}
         </div>
     );
 };

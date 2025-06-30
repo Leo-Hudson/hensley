@@ -9,7 +9,7 @@ import { SaveProductButton } from '../common/SaveProductButton';
 import ProductSlider_tab from '../Product/ProductSlider_tab';
 import { DownloadButton } from '../common/DownloadButton';
 
-const ProductTent = ({ productData, masterClassTentingURL }) => {
+const ProductTent = ({ productData, masterClassTentingURL, matchedProducts = [] }) => {
   const { tent, gallery } = productData;
   const [savedProducts, setSavedProducts] = useState([]);
 
@@ -35,7 +35,7 @@ const ProductTent = ({ productData, masterClassTentingURL }) => {
           <ProductSlider_tab product={tent} />
         </div>
         <div className='xl:w-1/2 flex flex-col items-center relative'>
-          <AddToQuoteForm title={productData?.title} productData={tent} />
+          <AddToQuoteForm title={productData?.title} productData={tent} matchedProducts={matchedProducts} />
           <SaveProductButton
             key={productData._id}
             productData={{ ...productData.productData, product: tent }}
