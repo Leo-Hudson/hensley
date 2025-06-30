@@ -14,6 +14,7 @@ import { uploadRelevantImage } from '@/services/poolcover';
 import { AddToCartButton } from '../Product/AddtoQuoteButton';
 import parse from 'html-react-parser';
 import { BreadCrumbs } from '../common/BreadCrumbs';
+import { MatchItWithButton } from '../common/MatchItWithButton';
 
 // Validation schema
 const schema = yup.object({
@@ -22,7 +23,7 @@ const schema = yup.object({
     poolEdge: yup.string().nullable(),
 }).required();
 
-export const AddToQuoteForm = ({ title, productData }) => {
+export const AddToQuoteForm = ({ title, productData, matchedProducts }) => {
 
     const [formData, setFormData] = useState({
         approxSize: '',
@@ -127,6 +128,7 @@ export const AddToQuoteForm = ({ title, productData }) => {
                         { label: 'Home', to: '/' },
                         { label: 'POOLCOVER' }
                     ]} />
+                    <MatchItWithButton product={{ ...productData, matchedProducts }} />
                 </div>
                 <h3 className='uppercase text-secondary-alt font-recklessRegular 
                     lg:text-[90px] 

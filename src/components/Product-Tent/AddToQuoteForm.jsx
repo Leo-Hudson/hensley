@@ -12,6 +12,7 @@ import { useCookies } from 'react-cookie';
 import { AddToCartButton } from '../Product/AddtoQuoteButton';
 import parse from 'html-react-parser';
 import { BreadCrumbs } from '../common/BreadCrumbs';
+import { MatchItWithButton } from '../common/MatchItWithButton';
 
 // Validation schema
 const schema = yup.object({
@@ -43,7 +44,8 @@ const schema = yup.object({
     needFloor: yup.string().nullable()
 }).required();
 
-export const AddToQuoteForm = ({ title, productData }) => {
+export const AddToQuoteForm = ({ title, productData, matchedProducts }) => {
+    
     // Form state management
     const [formData, setFormData] = useState({
         eventName: '',
@@ -220,6 +222,8 @@ export const AddToQuoteForm = ({ title, productData }) => {
                         { label: 'Home', to: '/' },
                         { label: 'TENTS' }
                     ]} />
+                    <MatchItWithButton product={{ ...productData, matchedProducts }} />
+
                 </div>
                 <h3 className='uppercase text-secondary-alt font-recklessRegular lg:text-[90px] lg:leading-[85px] text-[35px] leading-[30px] mb-4'>{title}</h3>
                 <div className="font-haasLight lg:text-[16px] lg:leading-[19px] text-[14px] leading-[17px] text-secondary-alt">

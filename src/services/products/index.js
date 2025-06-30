@@ -370,3 +370,23 @@ export const fetchAllProducts = async () => {
         logError(`Error fetching products: ${error.message}`, error);
     }
 }
+
+export const queryProducts = async (query) => {
+    try {
+        const response = await queryCollection({
+            dataCollectionId: "FullProductData",
+            includeReferencedItems: ["product"],
+            contains: ["content", query],
+            limit: 100,
+            sortOrder: "asc",
+            sortKey: "title",
+        });
+        if (!Array.isArray(response.items)) {
+            throw new Error(`Response does not contain items array`);
+        }
+
+        return response.items;
+    } catch (error) {
+        logError(`Error fetching products by category: ${error.message}`, error);
+    }
+}

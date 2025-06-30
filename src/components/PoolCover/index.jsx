@@ -1,30 +1,14 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PrimaryImage } from '../common/PrimaryImage';
-import { fetchSavedProductData } from '@/services/products';
 import { SaveProductButton } from '../common/SaveProductButton';
 import BannerStructures from '../Product-Tent/BannerStructures';
 import ProductSlider from '../Product/ProductSlider';
 import ProductSlider_tab from '../Product/ProductSlider_tab';
 import { AddToQuoteForm } from './AddToQuoteForm';
 
-const ProductPoolCover = ({ productData }) => {
+const ProductPoolCover = ({ productData, matchedProducts = [] }) => {
   const { covers, mediagallery } = productData;
-  const [savedProducts, setSavedProducts] = useState([]);
-
-  const fetchSavedProducts = async () => {
-    try {
-      const savedProducts = await fetchSavedProductData();
-
-      setSavedProducts(savedProducts);
-    } catch (error) {
-      logError("Error while fetching Saved Product", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchSavedProducts();
-  }, []);
 
   return (
     <>
@@ -34,12 +18,10 @@ const ProductPoolCover = ({ productData }) => {
           <ProductSlider_tab product={covers} />
         </div>
         <div className='xl:w-1/2 flex flex-col items-center relative'>
-          <AddToQuoteForm title={productData?.title} productData={covers} />
+          <AddToQuoteForm title={productData?.title} productData={covers} matchedProducts={matchedProducts} />
           <SaveProductButton
             key={productData._id}
             productData={{ ...productData.productData, product: covers }}
-            savedProducts={savedProducts}
-            setSavedProducts={setSavedProducts}
           />
         </div>
       </div>

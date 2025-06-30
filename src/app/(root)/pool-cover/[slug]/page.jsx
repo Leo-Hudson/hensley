@@ -28,7 +28,7 @@ export default async function Page({ params }) {
 
     return (
       <>
-        <ProductPoolCover productData={productData} />
+        <ProductPoolCover productData={productData} matchedProducts={matchedProducts || []} />
         <MatchProducts classes={"bg-transparent"} headingClasses={"!text-secondary-alt"} data={matchedProducts} pageDetails={{ matchProductsTitle: "match it with" }} buttonHide={true} loop={false} origin="auto" />
         <FeaturedProjects data={featuredProjectsData} pageDetails={{ featuredProjectTitle: "Products featured in this PROJECT entry:" }} loop={false} origin="auto" />
       </>

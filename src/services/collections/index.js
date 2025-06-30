@@ -6,18 +6,18 @@ import queryCollection from "@/utils/fetchFunction";
 
 
 export const fetchCategoryPageDetails = async () => {
-  try {
-    const pageDetails = await queryCollection({ dataCollectionId: "categoryPageDetails" });
+    try {
+        const pageDetails = await queryCollection({ dataCollectionId: "categoryPageDetails" });
 
-    if (!Array.isArray(pageDetails.items)) {
-      throw new Error(`PrivacyPolicy response does not contain items array`);
+        if (!Array.isArray(pageDetails.items)) {
+            throw new Error(`PrivacyPolicy response does not contain items array`);
+        }
+
+        return pageDetails.items[0]
+
+    } catch (error) {
+        logError(`Error fetching contact page data: ${error.message}`, error);
     }
-
-    return pageDetails.items[0]
-
-  } catch (error) {
-    logError(`Error fetching contact page data: ${error.message}`, error);
-  }
 };
 
 
@@ -116,20 +116,23 @@ export const fetchProductBannersData = async () => {
     }
 }
 
-export const fetchSortedProducts = async ({ collectionIds, limit = 12, skip = 0, sortIndex }) => {
+export const fetchSortedProducts = async ({ collectionIds = [], limit = 12, skip = 0, sortIndex }) => {
     try {
         const payload = {
             dataCollectionId: "FullProductData",
             includeReferencedItems: ["product", "mainCategory"],
-            hasSome: [
+            limit,
+            skip
+        };
+
+        if(collectionIds.length > 0) {
+            payload.hasSome = [
                 {
                     key: "categories",
                     values: collectionIds
                 }
-            ],
-            limit,
-            skip
-        };
+            ];
+        }
 
         if (sortIndex) {
             payload.sortKey = sortIndex;

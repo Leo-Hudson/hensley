@@ -59,7 +59,7 @@ export default async function Page({ params }) {
 
     return (
       <>
-        <ProductTent productData={productData} masterClassTentingURL={masterClassTentingURL} />
+        <ProductTent productData={productData} masterClassTentingURL={masterClassTentingURL} matchedProducts={matchedProducts || []} />
         <MatchProducts classes={"bg-transparent"} headingClasses={"!text-secondary-alt"} data={matchedProducts} pageDetails={{ matchProductsTitle: matchItWithTitle }} buttonHide={true} loop={false} origin="auto" />
         <FeaturedProjects data={featuredProjectsData} pageDetails={{ featuredProjectTitle: featuredProductTitle }} loop={false} origin="auto" />
       </>

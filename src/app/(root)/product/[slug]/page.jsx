@@ -54,7 +54,7 @@ export default async function Page({ params }) {
 
     return (
       <>
-        <Product data={data} />
+        <Product data={data} matchedProducts={matchedProducts || []} />
         <MatchProducts classes={"bg-transparent z-10"} headingClasses={"!text-secondary-alt"} data={matchedProducts} pageDetails={{ matchProductsTitle: matchItWithTitle }} buttonHide={true} loop={false} origin="auto" />
         <FeaturedProjects classes={'z-10'} data={featuredProjectsData} pageDetails={{ featuredProjectTitle: featuredProductTitle }} loop={false} origin="auto" />
       </>

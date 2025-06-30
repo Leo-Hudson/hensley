@@ -11,6 +11,7 @@ import useRedirectWithLoader from '@/hooks/useRedirectWithLoader';
 import { useCookies } from 'react-cookie';
 import { checkProductInCart, fetchSavedProductData } from '@/services/products';
 import { BreadCrumbs } from '../common/BreadCrumbs';
+import { MatchItWithButton } from '../common/MatchItWithButton';
 
 const INFO_HEADERS = [
   { title: 'Product', setItem: true },
@@ -51,13 +52,12 @@ export const QuantityControls = ({ quantity, onQuantityChange }) => (
   </div>
 );
 
-export const Product = ({ data }) => {
+export const Product = ({ data, matchedProducts = [] }) => {
   const [cookies, setCookie] = useCookies(["cartQuantity"]);
 
   const [productSetItems, setProductSetItems] = useState([]);
   const [cartQuantity, setCartQuantity] = useState(1);
   const [isUpdatingCart, setIsUpdatingCart] = useState(false);
-  const [savedProducts, setSavedProducts] = useState([]);
   const [productInCart, setProductInCart] = useState();
 
   const redirectWithLoader = useRedirectWithLoader();
@@ -228,11 +228,7 @@ export const Product = ({ data }) => {
 
   const setInitialData = async () => {
     try {
-      const [savedProducts, existInCart] = await Promise.all([
-        fetchSavedProductData(),
-        checkProductInCart(product._id, isProductCollection)
-      ]);
-      setSavedProducts(savedProducts);
+      const existInCart = await checkProductInCart(product._id, isProductCollection);
       setProductInCart(existInCart);
     } catch (error) {
       logError("Error while fetching product data", error);
@@ -264,6 +260,8 @@ export const Product = ({ data }) => {
             {product.name}
           </h1>
 
+          <MatchItWithButton product={{ ...product, matchedProducts }} />
+
           <div className='lg:mb-[48px] sm:mb-[10px] flex lg:justify-end gap-x-[28px]'>
             <span className='text-[35px] text-secondary-alt font-recklessRegular'>{totalPrice}</span>
             <span className='text-[35px] text-secondary-alt font-recklessRegular uppercase'>(total)</span>
@@ -293,10 +291,8 @@ export const Product = ({ data }) => {
 
         <AddToCartButton classes={'lg:!h-[200px] lg:!mt-3'} text={isUpdatingCart ? "Please wait..." : "Add to Quote"} disabled={isUpdatingCart} onClick={handleAddToCart} />
         <SaveProductButton
-          key={product.id}
+          key={product._id}
           productData={productData}
-          savedProducts={savedProducts}
-          setSavedProducts={setSavedProducts}
         />
       </div>
     </div>
